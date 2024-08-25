@@ -1,6 +1,8 @@
 import joblib
 from fastapi import APIRouter
 from pydantic import BaseModel
+from utils.pre_processing import preprocess_text
+
 import os
 
 # Define the input data model
@@ -20,7 +22,8 @@ router = APIRouter()
 @router.post("/predict/")
 async def predict_sentiment(review: Review):
     # Preprocess the input text (if necessary)
-    processed_review = review.text  # Assuming text_preprocessing is already done in your model
+    text = review.text 
+    processed_review = preprocess_text(text) 
     
     # Make a prediction using the loaded model
     prediction = model.predict([processed_review])[0]
