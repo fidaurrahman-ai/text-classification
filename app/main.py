@@ -1,11 +1,13 @@
 from fastapi import FastAPI
-from endpoints import sklearn
+from app.endpoints.sklearn import router as logistic_regression_router
 
 app = FastAPI()
 
-# Include the routes from sklearn.py
-app.include_router(sklearn.router)
+# Include the logistic regression router
+app.include_router(logistic_regression_router, prefix="/sklearn/logistic-regression", tags=["Logistic Regression"])
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello World from main.py!"}
+# You can add other routers or endpoints here
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
